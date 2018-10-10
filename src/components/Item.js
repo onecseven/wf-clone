@@ -1,17 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './listicle.js'
 
-//TODO
-// + BUTTON THAT MINIMIZES AND UNMINIMIZES THE VALUE, BE IT TEXT OR MORE LIST
-// MINIMIZED ONLY SHOWS KEY
-// ONCLICK
+// test = { 
+//   sarah: null,
+//   poetry: {
+//     time: null,
+//     rope: {
+//       why: null,
+//       not: null,
+//       stay: null,
+//       inside: null,
+//       its: null,
+//       saturday: null,
+//       after: null,
+//       all: null,
+//     }
+//   }
+// }
 
-const Item = ({key, value}) => {
+const Item = ({text, keypress}) => {
   return (
-    <div>
+  <div tabIndex="0"  onKeyPress={keypress}>
+    {text.value}
     </div>
   )
-}
+};
 
-export default App;
+export default Item;
