@@ -23,7 +23,7 @@ class App extends Component {
     return (
       <div className="App" >
         {this.state.array.map((el, index) => {
-          return (<Item  key={index} keypress={this.keypress} text={el}></Item>)
+          return (<Item  key={index} keypress={this.keypress} text={el.value} children={el.children}></Item>)
         })}
       </div>
     );

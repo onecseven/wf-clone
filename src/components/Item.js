@@ -18,11 +18,26 @@ import './listicle.js'
 //   }
 // }
 
-const Item = ({text, keypress}) => {
+const innerKeypress = function (e) { //non bound
+  if(e.key === 'Enter'){
+    let t = this.state.array.slice()
+    t.push(new listitem('enter'))
+    this.setState({array: this.state.array.slice()})
+  }  
+}
+
+const Item = ({text, keypress, children}) => {
   return (
-  <div tabIndex="0"  onKeyPress={keypress}>
+  <div>
+    <div tabIndex="0"  onKeyPress={keypress}>
     {text.value}
     </div>
+    {children ? 
+    children.map(el => (<Item  key={index} text={el.value} children={el.children}></Item>))
+    :
+    null
+    }
+  </div>
   )
 };
 
