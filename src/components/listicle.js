@@ -35,7 +35,7 @@ export default class listitem {
   constructor(text, parent=null, children=[]){
     this.value = text
     this.children = children
-    this.parent = parent || this
+    this.parent = parent || null
   }
   addChild(child, subchildren=[]){
     this.children.push(new listitem(child, this, subchildren))
@@ -91,14 +91,34 @@ class list{
       throw new Error('problem tabbing')
     }
     if (index > 0){
-      origin[index-1].addChild(item.value, item.children)
+      let temp = item
+      this.delete(item)
+      origin[index-1].addChild(temp.value, temp.children)
     }
   }
   untab(item){
-    let temp = item.parent.parent.addChild(item.value, item.children)
-    return item.parent.parent.children.last()
+    let temp = item
+    if (!temp.parent.parent){
+      if (this.originArray(temp.parent)){
+        var origin = this.originArray(temp.parent)[0]
+        origin.push(new listitem(temp.value, null, temp.children))
+      } else if (temp.parent === null) {
+        return
+      }
+    } else {
+      this.parent.parent.addChild(temp.value, temp.children)
+    }
+    this.delete(item)
   }
-  delete(){
+  delete(item){
+    if (this.originArray(item)){
+      var origin = this.originArray(item)[0]
+      var index = this.originArray(item)[1]
+    } else {
+      throw new Error('wwo')
+    }
+    origin.splice(index,1)
+    return
   }
   display(){
     let turn = (item) => {
@@ -122,6 +142,9 @@ let two = ls.enter('sarah', one)
 let twoo = ls.enter('sarah2', one)
 let three = ls.enter('natalia')
 let four = ls.enter('star', three)
+let five = ls.enter('wow', four)
+ls.display() //?
+ls.untab(four)
 ls.display() //?
 
 //tab -> move to .parent.children[i-1].children
