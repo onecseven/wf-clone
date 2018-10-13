@@ -18,20 +18,16 @@ import listitem from  './listicle.js'
 //   }
 // }
 
-const innerKeypress = function (e) { //non bound
-  if(e.key === 'Enter'){
-    let t = this.state.array.slice()
-    t.push(new listitem('enter'))
-    this.setState({array: this.state.array.slice()})
-  }  
-}
-
-const Item = ({text, keypress, children, obj}) => {
+const Item = ({text, keypress, children, obj, change}) => {
   return (
   <div>
-    <div tabIndex="0"  onKeyDown={(e) => {
+    <div tabIndex="0" 
+    onChange={(e) => {
+      change(obj, e.target.value)
+    }}
+    onKeyDown={(e) => {
       keypress(e, obj)
-    }}>
+    }} contentEditable>
     {text}
     </div>
     {children ? 

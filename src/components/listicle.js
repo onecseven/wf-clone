@@ -31,7 +31,7 @@ var checkArrays = function (arr1, arr2){
   return true;
 }
 
-export default class listitem {
+ class listitem {
   constructor(text, parent=null, children=[]){
     this.value = text
     this.children = children
@@ -52,7 +52,7 @@ export default class listitem {
   }
 }
 
-class list{
+export default class list{
   constructor(){
     this.store = []
   }
@@ -94,21 +94,22 @@ class list{
       let temp = item
       this.delete(item)
       origin[index-1].addChild(temp.value, temp.children)
-    }
+      console.log('we got here')
+    } 
   }
   untab(item){
-    let temp = item
-    if (!temp.parent.parent){
-      if (this.originArray(temp.parent)){
-        var origin = this.originArray(temp.parent)[0]
-        origin.push(new listitem(temp.value, null, temp.children))
-      } else if (temp.parent === null) {
-        return
-      }
-    } else {
-      this.parent.parent.addChild(temp.value, temp.children)
+    if (item.parent === null){
+      return 
     }
+    let temp = item
     this.delete(item)
+    if (temp.parent && this.originArray(temp.parent)){
+      var origin = this.originArray(temp.parent)[0]
+      var index = this.originArray(temp.parent)[1]
+      origin.splice(index+1, 0, new listitem(temp.value, temp.parent, temp.children))
+    } else if (temp.parent === null) {
+      return
+    }
   }
   delete(item){
     if (this.originArray(item)){

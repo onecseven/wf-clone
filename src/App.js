@@ -15,12 +15,23 @@ class App extends Component {
     this.state = {array: this.temp.store}
     this.keypress = this.keypress.bind(this)
   }
+  handleChange(obj, text){
+    obj.value = text
+  }
   keypress(event, obj=null){
-    console.log(event.key)
     if(event.key === 'Enter'){
-      this.temp.enter('hmm', obj)
+      event.preventDefault()
+      this.temp.enter(`${Math.random()}`, obj)
     } else if (event.key === 'Shift'){
+      event.preventDefault()
+      console.log(event.key)
       this.temp.tab(obj)
+      console.log(this.temp.display())
+    } else if (event.key === 'Alt'){
+      event.preventDefault()
+      console.log(event.key)
+      this.temp.untab(obj)
+      console.log(this.temp.display())
     }  
     this.forceUpdate();
   }
