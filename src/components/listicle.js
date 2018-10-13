@@ -31,11 +31,11 @@ var checkArrays = function (arr1, arr2){
   return true;
 }
 
-export default class listitem {
+class listitem {
   constructor(text, parent=null, children=[]){
     this.value = text
     this.children = children
-    this.parent = parent || this
+    this.parent = parent
   }
   addChild(child, subchildren=[]){
     this.children.push(new listitem(child, this, subchildren))
@@ -52,7 +52,7 @@ export default class listitem {
   }
 }
 
-class list{
+export default class list{
   constructor(){
     this.store = []
   }
@@ -115,13 +115,3 @@ class list{
     }),null, 2)
   }
 }
-
-let ls = new list()
-let one = ls.enter('hi')
-let two = ls.enter('sarah', one)
-let twoo = ls.enter('sarah2', one)
-let three = ls.enter('natalia')
-let four = ls.enter('star', three)
-ls.display() //?
-
-//tab -> move to .parent.children[i-1].children

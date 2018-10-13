@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './listicle.js'
+import listitem from  './listicle.js'
 
 // test = { 
 //   sarah: null,
@@ -26,14 +26,16 @@ const innerKeypress = function (e) { //non bound
   }  
 }
 
-const Item = ({text, keypress, children}) => {
+const Item = ({text, keypress, children, obj}) => {
   return (
   <div>
-    <div tabIndex="0"  onKeyPress={keypress}>
-    {text.value}
+    <div tabIndex="0"  onKeyDown={(e) => {
+      keypress(e, obj)
+    }}>
+    {text}
     </div>
     {children ? 
-    children.map(el => (<Item  key={index} text={el.value} children={el.children}></Item>))
+      children.map((el, index) => (<Item  key={index} obj={el} keypress={keypress} text={el.value} children={el.children}></Item>))
     :
     null
     }
