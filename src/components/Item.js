@@ -1,42 +1,40 @@
-import React, { Component } from 'react';
-import listitem from  './listicle.js'
+import React, { Component } from "react"
+import Min from "./Min"
 
-// test = { 
-//   sarah: null,
-//   poetry: {
-//     time: null,
-//     rope: {
-//       why: null,
-//       not: null,
-//       stay: null,
-//       inside: null,
-//       its: null,
-//       saturday: null,
-//       after: null,
-//       all: null,
-//     }
-//   }
-// }
-
-const Item = ({text, keypress, children, obj, change}) => {
+const Item = ({ text, keypress, children, obj, change, showChildren }) => {
   return (
-  <div>
-    <div tabIndex="0" 
-    onChange={(e) => {
-      change(obj, e.target.value)
-    }}
-    onKeyDown={(e) => {
-      keypress(e, obj)
-    }} contentEditable>
-    {text}
+    <div>
+      <div
+        tabIndex="0"
+        onKeyDown={e => {
+          keypress(e, obj)
+        }}
+      >
+      <Min obj={obj} showChildren={showChildren}/>
+        <span
+          onChange={e => {
+            change(obj, e.target.value)
+          }}
+          contentEditable
+        >
+          {text}
+        </span>
+      </div>
+      {children && obj.showChildren
+        ? children.map((el, index) => (
+            <Item
+              key={index}
+              change={change}
+              showChildren={showChildren}
+              obj={el}
+              keypress={keypress}
+              text={el.value}
+              children={el.children}
+            />
+          ))
+        : null}
     </div>
-    {children ? 
-      children.map((el, index) => (<Item  key={index} obj={el} keypress={keypress} text={el.value} children={el.children}></Item>))
-    :
-    null
-    }
-  </div>
   )
-};
+}
 
-export default Item;
+export default Item

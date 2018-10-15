@@ -36,6 +36,7 @@ var checkArrays = function (arr1, arr2){
     this.value = text
     this.children = children
     this.parent = parent || null
+    this.showChildren = true
   }
   addChild(child, subchildren=[]){
     this.children.push(new listitem(child, this, subchildren))
@@ -136,16 +137,3 @@ export default class list{
     }),null, 2)
   }
 }
-
-let ls = new list()
-let one = ls.enter('hi')
-let two = ls.enter('sarah', one)
-let twoo = ls.enter('sarah2', one)
-let three = ls.enter('natalia')
-let four = ls.enter('star', three)
-let five = ls.enter('wow', four)
-ls.display() //?
-ls.untab(four)
-ls.display() //?
-
-//tab -> move to .parent.children[i-1].children

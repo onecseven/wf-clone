@@ -9,11 +9,25 @@ class App extends Component {
   constructor(){
     super();
     this.temp = new list()
-    console.log(this.temp)
     this.temp.enter('hello')
     this.temp.enter('how are u')
     this.state = {array: this.temp.store}
     this.keypress = this.keypress.bind(this)
+    this.showChildren = this.showChildren.bind(this)
+  }
+/*
+  maximize(obj){
+
+  }
+  back(){
+
+  }
+*/
+
+  showChildren(obj){
+    obj.showChildren = !obj.showChildren
+    this.forceUpdate();
+
   }
   handleChange(obj, text){
     obj.value = text
@@ -39,7 +53,7 @@ class App extends Component {
     return (
       <div className="App" >
         {this.state.array.map((el, index) => {
-          return (<Item  key={index} keypress={this.keypress} obj={el} text={el.value} children={el.children}></Item>)
+          return (<Item  key={index} change={this.handleChange} keypress={this.keypress} obj={el} showChildren={this.showChildren} text={el.value} children={el.children}></Item>)
         })}
       </div>
     );
