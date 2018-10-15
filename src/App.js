@@ -38,14 +38,10 @@ class App extends Component {
       this.temp.enter(`${Math.random()}`, obj)
     } else if (event.key === 'Shift'){
       event.preventDefault()
-      console.log(event.key)
       this.temp.tab(obj)
-      console.log(this.temp.display())
     } else if (event.key === 'Alt'){
       event.preventDefault()
-      console.log(event.key)
       this.temp.untab(obj)
-      console.log(this.temp.display())
     }  
     this.forceUpdate();
   }
