@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import Min from "./Min"
+import Max from "./Max"
 
-const Item = ({ text, keypress, children, obj, change, showChildren }) => {
+const Item = ({ text, keypress, children, obj, change, showChildren, maximize }) => {
   return (
     <div>
       <div
@@ -11,13 +12,14 @@ const Item = ({ text, keypress, children, obj, change, showChildren }) => {
         }}
       >
       <Min obj={obj} showChildren={showChildren}/>
+      <Max obj={obj} maximize={maximize}/>
         <span
           onChange={e => {
             change(obj, e.target.value)
           }}
           contentEditable
         >
-          {text}
+          {text ? text : "     "}
         </span>
       </div>
       {children && obj.showChildren
@@ -30,6 +32,7 @@ const Item = ({ text, keypress, children, obj, change, showChildren }) => {
               keypress={keypress}
               text={el.value}
               children={el.children}
+              maximize={maximize}
             />
           ))
         : null}
