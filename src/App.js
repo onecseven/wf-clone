@@ -17,13 +17,16 @@ class App extends Component {
     }
     this.keypress = this.keypress.bind(this)
     this.showChildren = this.showChildren.bind(this)
+    this.handleChange = this.handleChange.bind(this)
     this.maximize = this.maximize.bind(this)
     this.back = this.back.bind(this)
   }
   maximize(obj) {
+    console.log('Maximize: ', obj)
     this.setState({
       array: [obj],
-      backButton: true
+      backButton: true,
+      lastKeypress: null
     })
   }
 
@@ -39,6 +42,7 @@ class App extends Component {
     this.forceUpdate()
   }
   handleChange(obj, text) {
+    console.log(obj, 'text, ', text)
     obj.value = text
   }
   keypress(event, obj = null) {

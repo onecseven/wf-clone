@@ -14,14 +14,15 @@ const Item = ({ text, keypress, children, obj, change, showChildren, maximize })
       <Min obj={obj} showChildren={showChildren}/>
       <Max obj={obj} maximize={maximize}/>
         <span
-          onChange={e => {
-            change(obj, e.target.value)
+          onBlur={e => {
+            change(obj, e.target.textContent)
           }}
           contentEditable
         >
-          {text ? text : "     "}
+          {text}
         </span>
       </div>
+      <div>
       {children && obj.showChildren
         ? children.map((el, index) => (
             <Item
@@ -36,6 +37,7 @@ const Item = ({ text, keypress, children, obj, change, showChildren, maximize })
             />
           ))
         : null}
+        </div>
     </div>
   )
 }
