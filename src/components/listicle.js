@@ -95,7 +95,6 @@ export default class list{
       let temp = item
       this.delete(item)
       origin[index-1].addChild(temp.value, temp.children)
-      console.log('we got here')
     } 
   }
   untab(item){
