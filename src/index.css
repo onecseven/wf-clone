@@ -12,3 +12,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+button{
+  font-size: 100%;
+  font-family: inherit;
+  border: 0;
+  padding: 0;
+  background-color: inherit;
+}
+
+.zoom {
+ transition: transform 1s ease;
+ transition: color 1s ease; /* Animation */
+ /* Animation */
+ display:inline;
+ color: rgb(223, 223, 223);
+}
+
+
+.zoom:hover {
+  display:inline;
+  border-radius: 60px;
+  transform: scale(1.7); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  color: black;
+}

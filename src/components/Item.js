@@ -4,7 +4,7 @@ import Max from "./Max"
 import Del from "./Del"
 
 
-const Item = ({ text, keypress, children, obj, change, showChildren, maximize, delet }) => {
+const Item = ({ text, keypress, children, obj, change, showChildren, maximize, delet, }) => {
   return (
     <div>
       <div

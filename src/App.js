@@ -65,7 +65,7 @@ class App extends Component {
     return (
       <div className="App">
         {this.state.backButton ? 
-        (<button onClick={this.back}> {"<-"} </button>)
+        (<button className="zoom" onClick={this.back}> {"<-"} </button>)
         :
         null}
         {this.state.array.length > 0 ? this.state.array.map((el, index) => {
@@ -94,7 +94,7 @@ class App extends Component {
 }
 /*
 TODO: 
-- clean up
+-rewrite props
 - css
 
 */
