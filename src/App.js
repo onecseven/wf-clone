@@ -1,6 +1,5 @@
+/* global chrome */
 import React, { Component } from "react"
-import logo from "./logo.svg"
-import "./App.css"
 import "./components/listicle.js"
 import Item from "./components/Item.js"
 import list from "./components/listicle.js"
@@ -9,7 +8,13 @@ class App extends Component {
   constructor() {
     super()
     this.mainList = new list()
-    this.mainList.enter("Welcome")
+    chrome.storage.sync.get(["mainList"], result => {
+      this.mainList.store = result.mainList.store
+      if (result.mainList.store) {
+        this.setState({ array: result.mainList.store })
+        console.log(JSON.stringify(result.mainList.store, null, 2))
+      }
+    })
     this.state = {
       array: this.mainList.store,
       backButton: false
@@ -28,7 +33,7 @@ class App extends Component {
       lastKeypress: null
     })
   }
-  del(obj){
+  del(obj) {
     this.mainList.delete(obj)
     this.forceUpdate()
   }
@@ -39,16 +44,26 @@ class App extends Component {
       backButton: false
     })
   }
+  componentDidMount() {
+    chrome.storage.sync.get(["mainList"], result => {
+      this.mainList.store = result.mainList.store
+      if (result.mainList.store) {
+        this.setState({ array: result.mainList.store })
+        console.log(this.state)
+      }
+    })
+  }
 
   showChildren(obj) {
     obj.showChildren = !obj.showChildren
     this.forceUpdate()
   }
   handleChange(obj, text) {
-    console.log(obj, 'text, ', text)
+    console.log(obj, "text, ", text)
     obj.value = text
   }
   keypress(event, obj = null) {
+    console.log(event.key)
     if (event.key === "Enter") {
       event.preventDefault()
       this.mainList.enter(`New item`, obj)
@@ -61,33 +76,50 @@ class App extends Component {
     }
     this.forceUpdate()
   }
+  componentDidUpdate() {
+    if (this.state.array && this.state.array.length > 0) {
+      chrome.storage.sync.set({ mainList: this.mainList }, function() {
+      })
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        {this.state.backButton ? 
-        (<button className="zoom" onClick={this.back}> {"<-"} </button>)
-        :
-        null}
-        {this.state.array.length > 0 ? this.state.array.map((el, index) => {
-          return (
-            <Item
-              key={index}
-              delet={this.del}
-              change={this.handleChange}
-              keypress={this.keypress}
-              maximize={this.maximize}
-              obj={el}
-              showChildren={this.showChildren}
-              text={el.value}
-              children={el.children}
-            />
-          )
-        }) : 
-        (<button onClick={(e) => {
-          this.mainList.enter(`New List`)
-          this.forceUpdate()
-        }}>+</button>)
-        }
+        {this.state.backButton ? (
+          <button className="zoom" onClick={this.back}>
+            {" "}
+            {"<-"}{" "}
+          </button>
+        ) : null}
+        {this.state.array.length > 0 ? (
+          this.state.array.map((el, index) => {
+            return (
+              <Item
+                key={index}
+                delet={this.del}
+                change={this.handleChange}
+                keypress={this.keypress}
+                maximize={this.maximize}
+                obj={el}
+                showChildren={this.showChildren}
+                text={el.value}
+                children={el.children}
+              />
+            )
+          })
+        ) : (
+          <button
+            onClick={e => {
+              this.mainList = new list()
+              this.mainList.enter(`Welcome`)
+              chrome.storage.sync.set({ mainList: this.mainList }, () => {})
+              this.setState({ array: this.mainList.store })
+            }}
+          >
+            +
+          </button>
+        )}
       </div>
     )
   }
